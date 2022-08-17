@@ -10,7 +10,7 @@ module ActiveStorage::SetBlob # :nodoc:
   private
     def set_blob
       puts blob_scope.all.map(&:attributes)
-      Rollbar.info("set_blob", params: params, all: blob_scope.all.map(&:attributes))
+      Rollbar.info("set_blob", params: params, all: blob_scope.all.map(&:attributes), q: params[:signed_blob_id] || params[:signed_id])
       @blob = blob_scope.find_signed!(params[:signed_blob_id] || params[:signed_id])
       Rollbar.info("this is the blob", blob: @blob)
     rescue ActiveSupport::MessageVerifier::InvalidSignature
